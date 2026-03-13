@@ -1,0 +1,31 @@
+{% extends "templates_modelpage.html" %}
+
+{% block content %}
+    <h1>Pads Ativos de {{ user.name }}</h1>
+    <div class="user-info">
+        <img src="{{ user.photo }}" alt="Foto de {{ user.name }}" width="128" height="128">  <!-- Ajuste tamanho se necessário -->
+        <p><strong>Nome:</strong> {{ user.name }}</p>
+    </div>
+    <hr>
+    <h2>Lista de Pads Ativos</h2>
+    {% if pads %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Data de Criação</th>  <!-- Ajuste colunas conforme modelo Pad -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for pad in pads %}
+                    <tr>
+                        <td><a href="{{ url_for('pads.view', pad_id=pad.id) }}">{{ pad.title }}</a></td>  <!-- Assuma blueprint 'pads' para view -->
+                        <td>{{ pad.created_at.strftime('%d/%m/%Y') }}</td>  <!-- Formato de data; ajuste campo -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Este usuário não possui pads ativos no momento.</p>
+    {% endif %}
+{% endblock %}
